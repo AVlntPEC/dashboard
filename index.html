@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+</head>
+<style>
+    #map {
+        height: 100%;
+    }
+
+    #form {
+        margin: 20px;
+    }
+
+    input {
+        margin-right: 10px;
+    }
+
+    video {
+        width: 100%;
+        max-width: 600px;
+
+        border-radius: 10px;
+        transform: scaleX(-1);
+        /* Flip the video horizontally */
+        height: 100%;
+    }
+
+    /* .controls {
+            margin-top: 20px;
+        } */
+    #toggle {
+        /* padding: 10px 20px; */
+        /* margin: 0 10px; */
+        /* font-size: 16px; */
+        cursor: pointer;
+        background: transparent;
+        border: none;
+    }
+
+    .sixth-page {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 20px;
+
+        /* margin-top: ; */
+    }
+
+    .arrow {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-top: 25px solid transparent;
+            border-bottom: 25px solid transparent;
+            margin: 20px;
+        }
+        .left-arrow {
+            border-right: 50px solid grey;
+        }
+        .right-arrow {
+            border-left: 50px solid grey;
+        }
+        .active-left {
+            border-right: 50px solid yellow;
+        }
+        .active-right {
+            border-left: 50px solid yellow;
+        }
+    
+</style>
+
+<body>
+
+    <section class="first-page container-fluid">
+
+        <div class="top-icons">
+            <div class="wifi-icon">
+                <h4><a href="#" style="color: white;"><i class="bi bi-wifi"></i></a></h4>
+            </div>
+            <!-- <div class="battery-icon">
+                <h4><a href="#" style="color: white;"><i class="bi bi-battery-full"></i></a></h4>
+            </div> -->
+            <div class="datetime text-white" id="datetime"></div>
+
+        </div>
+        <div class="battery-container">
+            <div class="battery-container">
+                <div class="battery">
+                    <div class="battery-level" id="battery-level"></div>
+                </div>
+                <div class="battery-cap"></div>
+                <div class="status" id="battery-status"></div>
+            </div>
+
+
+
+            <div class="bottom-menu">
+                <div class="home-icon" onclick="showHomePage()">
+                    <h1> <a href="#" style="color: white;"><i class="bi bi-house-door-fill"></i></a></h1>
+                </div>
+                <div class="map-icon" onclick="showMapPage()">
+                    <h1> <a href="#"><i class="bi bi-geo-alt-fill"></i></a></h1>
+                </div>
+                <div class="car-icon" onclick="showCarPage()">
+                    <h1> <a href="#"><i class="bi bi-car-front-fill"></i></a></h1>
+                </div>
+                <div class="cam-icon">
+                    <h1> <a href="#" onclick="showCamPage()">
+                            <h1><i class="bi bi-camera-fill"></i>
+                        </a></h1>
+                </div>
+                <!-- <div class="set-icon" onclick="showSetPage()"><h1> <a href="#"><i class="bi bi-gear-fill"></i></a></h1></div> -->
+                <!-- <div class="report-icon" onclick="showReportPage()"><h1> <a href="#"><i class="bi bi-file-earmark-fill"></i></a></h1></div> -->
+
+            </div>
+
+
+
+            <section class="home-page">
+
+                <div class="speedometer">
+                    <div class="speed-display" id="speedDisplay">0</div>
+                    <div class="unit">km/h</div>
+                </div>
+                <DIV class="minimap">
+                    <div id="">
+                        <iframe width="425" height="350"
+                            src="https://www.openstreetmap.org/export/embed.html?bbox=80.07452438163759%2C13.048839211633635%2C80.0787382335663%2C13.052479417985727&amp;layer=mapnik&amp;marker=13.050654118469879%2C80.07663130760193"
+                            style="border: 1px solid black"></iframe>
+                        <br /><small><a
+                                href="https://www.openstreetmap.org/?mlat=13.05065&amp;mlon=80.07663#map=17/13.05066/80.07663">View
+                                Larger Map</a></small>
+                    </div>
+                </DIV>
+
+                <div class="temp">
+                    <!-- <h4>23°C</h4>
+            <p style="margin-left: 80px; color: darkgrey; margin-top: 5px;" class="weather-condition"></p>
+            <p style="margin-left: 80px; color: white; margin-top: 25px;" class="weather-location">chennai</p>
+            <h6 style="margin-left: 25px; color: white; margin-top: 75px;" class="weather-humidity">38%</h6>
+            <p style="margin-left: 10px; color: darkgrey; margin-top: 95px;">Humidity</p>
+            <p style="margin-left: 165px; color: darkgrey; margin-top: 95px;">Wind</p>
+            <h6 style="margin-left: 150px; color: white; margin-top: 75px;" class="weather-wind">17 km//h</h6>
+            <img src="Screenshot (151).png" alt="bluemoon"> -->
+                </div>
+                <div class="mini-car">
+                    <h4 style="margin-left: 100px; color: white;">AV</h4>
+                    <P style="margin-left: 100px; margin-top: 25px; color: darkgrey;">Model 1</P>
+                    <p style="margin-left: 10px; margin-top: 50px; color: darkgrey;">Range: <span
+                            style="color: white; font-weight: bold;">50Km</span></p>
+                    <p style="margin-left: 10px; margin-top: 75px; color: darkgrey;">Mileage: <span
+                            style="color: white; font-weight: bold;">10kWh/80KM</span></p>
+
+                </div>
+                <div class="minicam">
+
+                    <video class="video" autoplay></video>
+                    <div class="controls text-center">
+                        <button id="toggle">
+
+                        </button>
+                    </div>
+                </div>
+                <div class="dashboard">
+                    <div class="odometer">
+                        <div class="label">Total Distance</div>
+                        <div id="total-odometer" class="odometer-display">000000.00</div>
+                    </div>
+                    <div>  
+                        <!-- <h1>Indicator</h1> -->
+
+                        <div>
+                            <!-- Left and Right Arrow Indicators -->
+                            <div id="leftIndicator" class="arrow left-arrow"></div>
+                            <div id="rightIndicator" class="arrow right-arrow"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- <div class="speedometer">
+                    <div class="speed-display" id="speedDisplay">0</div>
+                    <div class="unit">km/h</div>
+                </div> -->
+            </section>
+    </section>
+
+
+
+
+    <section class="second-page container-fluid" style="display: none;">
+        <div class="bottom-menu">
+            <div class="home-icon" onclick="showHomePage()">
+                <h1> <a href="#"><i class="bi bi-house-door-fill"></i></a></h1>
+            </div>
+
+            <div class="map-icon">
+                <h1> <a href="#" style="color: white;"><i class="bi bi-geo-alt-fill"></i></a></h1>
+            </div>
+            <div class="car-icon" onclick="showCarPage()">
+                <h1> <a href="#"><i class="bi bi-car-front-fill"></i></a></h1>
+            </div>
+            <div class="cam-icon" onclick="showCamPage()">
+                <h1> <a href="#">
+                        <h1><i class="bi bi-camera-fill"></i>
+                    </a></h1>
+            </div>
+            <!-- <div class="set-icon" onclick="showSetPage()">
+                <h1> <a href="#"><i class="bi bi-gear-fill"></i></a></h1>
+            </div> -->
+
+
+        </div>
+
+        <div class="main-map">
+            <form class="map-input" method="get" style="box-shadow: rgb(3, 3, 32) 0px 7px 29px 0px;">
+                <h2 style="color: white;" class="text-center mt-4">Choose Your Path</h2>
+                <div class="input-container">
+                    <input type="text" id="currentLocation" required="" style="color: white;">
+                    <label for="input" class="label">Start Point</label>
+                    <div class="underline"></div>
+
+                </div>
+                <div class="input-container">
+                    <input type="text" id="destination" required="" style="color: white;">
+                    <label for="input" class="label">Destination Point</label>
+                    <div class="underline"></div>
+
+                </div>
+                <button onclick="findRoute()" type="submit" class="map-submit text-center w-100"><a
+                        style="--clr: #7808d0" class="button" href="#">
+                        <span class="button__icon-wrapper">
+                            <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 14 15">
+                                <path fill="currentColor"
+                                    d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z">
+                                </path>
+                            </svg>
+
+                            <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg"
+                                width="10" fill="none" viewBox="0 0 14 15">
+                                <path fill="currentColor"
+                                    d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z">
+                                </path>
+                            </svg>
+                        </span>
+                        Start Journey
+                    </a></button>
+            </form>
+            <div class="full-map">
+                <div id="map"></div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="third-page container-fluid text-center" style="display: none; text-align: center;">
+        <div id="google_translate_element"></div>
+
+        <div class="bottom-menu">
+            <div class="home-icon" onclick="showHomePage()">
+                <h1> <a href="#"><i class="bi bi-house-door-fill"></i></a></h1>
+            </div>
+
+            <div class="map-icon" onclick="showMapPage()">
+                <h1> <a href="#"><i class="bi bi-geo-alt-fill"></i></a></h1>
+            </div>
+            <div class="car-icon">
+                <h1> <a href="#" style="color: white;"><i class="bi bi-car-front-fill"></i></a></h1>
+            </div>
+            <div class="cam-icon" onclick="showCamPage()">
+                <h1> <a href="#">
+                        <h1><i class="bi bi-camera-fill"></i>
+                    </a></h1>
+            </div>
+            <!-- <div class="set-icon"onclick="showSetPage()">
+                <h1> <a href="#"><i class="bi bi-gear-fill"></i></a></h1>
+            </div>
+
+           -->
+        </div>
+        <div class="carMiniContainer">
+
+
+            <div class="dashboardC">
+                <h2>Solar Energy Monitoring Dashboard</h2>
+                <div class="info-box">
+                    <p>Solar Panel Output: <span id="solarOutput">Loading...</span> kW</p>
+                </div>
+                <div class="info-box">
+                    <p>Battery Level: <span id="batteryLevel">Loading...</span> kWh / 50.0 kWh</p>
+                </div>
+                <div class="info-box">
+                    <p>Energy Consumption: <span id="energyConsumption">Loading...</span> kW</p>
+                </div>
+                <div class="info-box">
+                    <p>Estimated Range: <span id="estimatedRange">Loading...</span> miles</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="t-container">
+            <h1>Vehicle Mode</h1>
+            <p id="modeStatus">Current Mode: Manual</p>
+
+
+            <label class="switch" for="">
+                <input type="checkbox" id="modeSwitch">
+                <span class="check"></span>
+            </label>
+        </div>
+    </div>
+        <!-- <div class="cspeedometer" style="height: 100%;">
+            <svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color: #00BFFF; stop-opacity: 1" />
+                        <stop offset="100%" style="stop-color: #1E90FF; stop-opacity: 1" />
+                    </linearGradient>
+                </defs>
+                
+                <path d="M 20,200 A 180,180 0 0,1 380,200" stroke="lightgray" stroke-width="40" fill="none" />
+                <path d="M 20,200 A 180,180 0 0,1 380,200" stroke="url(#grad1)" stroke-width="40"
+                    stroke-dasharray="1130" stroke-dashoffset="1130" fill="none" id="speedometer-fill" />
+                <line x1="200" y1="200" x2="200" y2="50" stroke="#00BFFF" stroke-width="5" stroke-linecap="round"
+                    id="speedometer-needle" />
+                <text x="200" y="150" font-size="50" text-anchor="middle" fill="white" id="speedometer-label">0</text>
+            </svg>
+        </div> -->
+        <!-- <div class="battery-container">
+            <div class="battery">
+                <div class="battery-level" id="battery-level"></div>
+            </div>
+            <div class="battery-cap"></div>
+            <div class="status" id="battery-status"></div>
+        </div> -->
+        <!-- <div class="minicam">
+            <video class="video" autoplay></video>
+            <div class="controls text-center">
+                <button id="toggle">
+                </button>
+            </div>
+        </div> -->
+    </section>
+    <section class="sixth-page mt-5" style="display: none;">
+        <div class="bottom-menu sticky-bottom">
+            <div class="home-icon" onclick="showHomePage()">
+                <h1> <a href="#"><i class="bi bi-house-door-fill"></i></a></h1>
+            </div>
+            <div class="map-icon" onclick="showMapPage()">
+                <h1> <a href="#"><i class="bi bi-geo-alt-fill"></i></a></h1>
+            </div>
+            <div class="car-icon" onclick="showCarPage()">
+                <h1> <a href="#"><i class="bi bi-car-front-fill"></i></a></h1>
+            </div>
+            <div class="cam-icon" onclick="showCamPage()">
+                <h1> <a href="#" style="color: white;">
+                        <h1><i class="bi bi-camera-fill"></i>
+                    </a></h1>
+            </div>
+            <!-- <div class="set-icon"onclick="showSetPage()">
+                <h1> <a href="#"><i class="bi bi-gear-fill"></i></a></h1>
+            </div> -->
+
+
+        </div>
+
+        <div class="cam-1">Front - 1 <div class="rec1"></div>
+        </div>
+        <div class="cam-2">Front - 2 <div class="rec2"></div>
+        </div>
+        <div class="cam-3">Right - 1 <div class="rec3"></div>
+        </div>
+        <div class="cam-4">Right -2 <div class="rec4"></div>
+        </div>
+        <div class="cam-5 mt-5">Left - 1 <div class="rec5"></div>
+        </div>
+        <div class="cam-6 mt-5">Left - 2 <div class="rec6"></div>
+        </div>
+        <div class="cam-7 mt-5">Back - 1 <div class="rec7"></div>
+        </div>
+        <div class="cam-8 mt-5">Back - 2 <div class="rec8"></div>
+        </div>
+
+    </section>
+
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+<script defer src="script.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script>
+    // var map = L.map('map').setView([13.0507367, 80.0766982], 15); // Updated coordinates
+    // function showposition(position){
+    //     var long = position.coords.longitude;
+    //     var lat = position.coords.latitude;
+    //     console.log(long,lat)
+    // }
+
+    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //     // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    // }).addTo(map);
+
+    // L.marker([13.0507367, 80.0766982]).addTo(map)
+    //     .bindPopup('Your Location')
+    //     .openPopup();
+    var map = L.map('map').setView([37.7749, -122.4194], 13); // Center on San Francisco
+
+    // Add OpenStreetMap tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Initialize routing control (but don't add it yet)
+    var routingControl = L.Routing.control({
+        router: L.Routing.osrmv1({
+            serviceUrl: 'https://router.project-osrm.org/route/v1'
+        }),
+        routeWhileDragging: true
+    }).addTo(map);
+
+    // Function to find and display the route
+    function findRoute() {
+        var currentLocation = document.getElementById('currentLocation').value;
+        var destination = document.getElementById('destination').value;
+
+        if (!currentLocation || !destination) {
+            alert('Please enter both current location and destination.');
+            return;
+        }
+
+        var geocoder = L.Control.Geocoder.nominatim();
+        geocoder.geocode(currentLocation, function (currentResults) {
+            if (currentResults.length === 0) {
+                alert('Current location not found.');
+                return;
+            }
+            var startLatLng = currentResults[0].center;
+
+            geocoder.geocode(destination, function (destinationResults) {
+                if (destinationResults.length === 0) {
+                    alert('Destination not found.');
+                    return;
+                }
+                var endLatLng = destinationResults[0].center;
+
+                // Update the route with new waypoints
+                routingControl.setWaypoints([
+                    L.latLng(startLatLng.lat, startLatLng.lng),
+                    L.latLng(endLatLng.lat, endLatLng.lng)
+                ]);
+
+                // Center the map on the route
+                map.setView([startLatLng.lat, startLatLng.lng], 13);
+            });
+        });
+    }
+
+    let stream = null;
+
+    async function startCamera() {
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            const videoElement = document.querySelector('video');
+            videoElement.srcObject = stream;
+            const videoElement1 = document.querySelector('.cam-1');
+            videoElement1.srcObject = stream;
+            const videoElement2 = document.querySelector('.cam-2');
+            videoElement2.srcObject = stream;
+            const videoElement3 = document.querySelector('.cam-3');
+            videoElement3.srcObject = stream;
+            const videoElement4 = document.querySelector('.cam-4');
+            videoElement4.srcObject = stream;
+            const videoElement5 = document.querySelector('.cam-5');
+            videoElement5.srcObject = stream;
+            const videoElement6 = document.querySelector('.cam-6');
+            videoElement6.srcObject = stream;
+            const videoElement7 = document.querySelector('.cam-7');
+            videoElement7.srcObject = stream;
+            const videoElement8 = document.querySelector('.cam-8');
+            videoElement8.srcObject = stream;
+        } catch (error) {
+            console.error('Error accessing the camera:', error);
+        }
+    }
+
+    document.getElementById('toggle').addEventListener('click', () => {
+        const videoElement = document.querySelectorAll('.video');
+        const toggleButton = document.getElementById('toggle');
+        if (videoElement.paused) {
+            videoElement.play();
+            toggleButton.innerHTML = `<h3><i class="bi bi-pause-fill"></i></h3>`;
+        } else {
+            videoElement.pause();
+            toggleButton.innerHTML = `<h3><i class="bi bi-play-fill"></i></h3>`;
+        }
+    });
+
+    startCamera();
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+            { pageLanguage: 'en' },
+            'google_translate_element'
+        );
+    }
+    let weather = document.querySelector(".temp");
+    function api() {
+
+        fetch('https://api.weatherapi.com/v1/current.json?key=46de42fa554249918e841524240108&q=Poonamallee')
+            .then(res => res.json())
+            // .then(data => console.log(data.current.condition.text))
+            .then(data => weather.innerHTML = `<h4>${data.current.temp_c}°C</h4>
+            <p style="margin-left: 90px; color: darkgrey; margin-top: 5px;" class="weather-condition">${data.current.condition.text}</p>
+            <p style="margin-left: 90px; color: white; margin-top: 25px;" class="weather-location">${data.location.name}</p>
+            <h6 style="margin-left: 25px; color: white; margin-top: 75px;" class="weather-humidity">${data.current.humidity}%</h6>
+            <p style="margin-left: 10px; color: darkgrey; margin-top: 95px;">Humidity</p>
+            <p style="margin-left: 165px; color: darkgrey; margin-top: 95px;">Wind</p>
+            <h6 style="margin-left: 150px; color: white; margin-top: 75px;" class="weather-wind">${data.current.wind_kph} km//h</h6>
+            <img src="Screenshot (151).png" alt="bluemoon">`)
+
+    }
+    setInterval(() => {
+        api()
+    }, 1000)
+    function updateBatteryStatus(battery) {
+        const level = Math.round(battery.level * 100);
+        const batteryLevel = document.getElementById('battery-level');
+        const batteryStatus = document.getElementById('battery-status');
+
+        batteryLevel.style.height = `${level}%`;
+        batteryStatus.textContent = `${level}%`;
+
+        if (level > 50) {
+            batteryLevel.style.background = 'linear-gradient(to top, #76c7c0, #4e9a9a)';
+        } else if (level > 20) {
+            batteryLevel.style.background = 'linear-gradient(to top, #f1c40f, #e67e22)';
+        } else {
+            batteryLevel.style.background = 'linear-gradient(to top, #e74c3c, #c0392b)';
+        }
+    }
+
+    navigator.getBattery().then(battery => {
+        updateBatteryStatus(battery);
+
+        battery.addEventListener('levelchange', () => {
+            updateBatteryStatus(battery);
+        });
+
+        battery.addEventListener('chargingchange', () => {
+            updateBatteryStatus(battery);
+        });
+    });
+    function updateDateTime() {
+        const now = new Date();
+
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        const day = days[now.getDay()];
+        const date = now.getDate();
+        const month = months[now.getMonth()];
+        const year = now.getFullYear();
+
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const time = `${hours}:${minutes}:${seconds}`;
+
+        const dateTimeString = `${day}, ${date} ${month} ${year} ${time}`;
+        document.getElementById('datetime').textContent = dateTimeString;
+    }
+
+    setInterval(updateDateTime, 1000);
+    updateDateTime(); // initial call to set the date and time immediately
+
+    document.addEventListener("DOMContentLoaded", function () {
+        let isAutomatic = false;
+        const modeSwitch = document.getElementById('modeSwitch');
+        const modeStatus = document.getElementById('modeStatus');
+
+        // Function to update mode
+        function updateMode() {
+            if (isAutomatic) {
+                modeStatus.textContent = 'Current Mode: Automatic';
+            } else {
+                modeStatus.textContent = 'Current Mode: Manual';
+            }
+        }
+
+        // Toggle mode on switch
+        modeSwitch.addEventListener('change', function () {
+            isAutomatic = modeSwitch.checked;
+            updateMode();
+
+            // Send mode change request to backend
+            fetch('/changeMode', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ mode: isAutomatic ? 'automatic' : 'manual' }),
+            })
+                .then(response => response.json())
+                .then(data => console.log('Mode changed:', data))
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+    });
+
+    const vehicleData = {
+            leftIndicator: false,
+            rightIndicator: false
+        };
+
+        // Function to update the indicators based on vehicle data
+        function updateIndicators() {
+            const leftIndicator = document.getElementById('leftIndicator');
+            const rightIndicator = document.getElementById('rightIndicator');
+
+            // Update the left arrow based on the real-time data
+            if (vehicleData.leftIndicator) {
+                leftIndicator.classList.add('active-left');
+            } else {
+                leftIndicator.classList.remove('active-left');
+            }
+
+            // Update the right arrow based on the real-time data
+            if (vehicleData.rightIndicator) {
+                rightIndicator.classList.add('active-right');
+            } else {
+                rightIndicator.classList.remove('active-right');
+            }
+        }
+
+        // Simulate receiving real-time data from the vehicle system
+        const socket = new WebSocket('ws://your-vehicle-data-source');
+
+        // When a message is received from the vehicle (real-time)
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+
+            // Assume the data structure contains leftIndicator and rightIndicator values
+            vehicleData.leftIndicator = data.leftIndicator;
+            vehicleData.rightIndicator = data.rightIndicator;
+
+            // Update the dashboard with the new data
+            updateIndicators();
+        };
+</script>
+<script type="text/javascript"
+    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+</html>

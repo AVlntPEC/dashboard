@@ -1,0 +1,650 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #24272c;
+}
+
+.bottom-menu {
+    width: 100%;
+    height: 80px;
+    background-color: black;
+    position: fixed; /* Change from absolute to fixed */
+    bottom: 0;
+    left: 0; /* Align to the left edge */
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.bottom-menu div{
+    height: 40px;
+    width: 40px;
+}
+.bottom-menu div a{
+    color: grey;
+}
+.minimap{
+    height: 350px;
+    width: 350px;
+    background-color: black;
+    opacity: .8;
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    box-shadow: rgb(3, 3, 32) 0px 7px 29px 0px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: url('Screenshot\ \(150\).png');
+}
+.temp{
+    width: 250px;
+    height: 150px;
+    background-color: black;
+    box-shadow: rgb(3, 3, 32) 0px 7px 29px 0px;
+    border-radius: 20px; 
+    position: absolute;
+    right: 30px;
+    top: 100px;
+    overflow: hidden;
+    z-index: -2;
+    
+}
+.temp h4, .temp h6{
+    color: white;
+}
+
+.temp h4, .temp h6, .temp p{
+    position: absolute;
+}
+.temp h4{
+    margin-top: 15px;
+    margin-left: 10px;
+}
+.temp img{
+    position: absolute;
+    text-shadow:rgb(25, 25, 255) 0px 7px 29px 0px;
+    z-index: -1;
+}
+.mini-car{
+    width: 250px;
+    height: 150px;
+    background-color: black;
+    box-shadow: rgb(3, 3, 32) 0px 7px 29px 0px;
+    border-radius: 20px; 
+    position: absolute;
+    right: 30px;
+    bottom: 200px;
+    overflow: hidden;
+}
+
+
+.mini-car h4, .mini-car p{
+    position: absolute;
+}
+
+.minicam{
+    width: 350px;
+    height: 300px;
+    background-color: black;
+    position: absolute;
+    top: 100px;
+    left: 600px;
+    border-radius: 20px;
+}
+
+
+
+/* Map Page */
+
+
+.map-input{
+    width: 400px;
+    height: 450px;
+    background-color: rgb(4, 19, 32);
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    border-radius: 15px;
+}
+.input-container {
+    position: relative;
+    margin: 50px auto;
+    width: 200px;
+  }
+  
+  .input-container input[type="text"] {
+    font-size: 15px;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    padding: 5px 0;
+    background-color: transparent;
+    outline: none;
+  }
+  
+  .input-container .label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #ccc;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  
+  .input-container input[type="text"]:focus ~ .label,
+  .input-container input[type="text"]:valid ~ .label {
+    top: -20px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .input-container .underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #333;
+    transform: scaleX(0);
+    transition: all 0.3s ease;
+  }
+  
+  .input-container input[type="text"]:focus ~ .underline,
+  .input-container input[type="text"]:valid ~ .underline {
+    transform: scaleX(1);
+  }
+  .button {
+    line-height: 1;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .75rem;
+    background-color: var(--clr);
+    color: #fff;
+    border-radius: 10rem;
+    font-weight: 600;
+    padding: .75rem 1.5rem;
+    padding-left: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background-color .3s;
+  }
+  
+  .button__icon-wrapper {
+    flex-shrink: 0;
+    width: 25px;
+    height: 25px;
+    position: relative;
+    color: var(--clr);
+    background-color: #fff;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  
+  .button:hover {
+    background-color: #000;
+  }
+  
+  .button:hover .button__icon-wrapper {
+    color: #000;
+  }
+  
+  .button__icon-svg--copy {
+    position: absolute;
+    transform: translate(-150%, 150%);
+  }
+  
+  .button:hover .button__icon-svg:first-child {
+    transition: transform .3s ease-in-out;
+    transform: translate(150%, -150%);
+  }
+  
+  .button:hover .button__icon-svg--copy {
+    transition: transform .3s ease-in-out .1s;
+    transform: translate(0);
+  }
+
+.map-submit{
+  background-color: transparent;
+  border: none;
+}
+.full-map{
+  width: 800px;
+  height: 450px;
+  background-color: black;
+  position: absolute;
+  right: 40px;
+  TOP: 50px;
+  border-radius: 20px;
+  box-shadow: rgb(3, 3, 32) 0px 7px 29px 0px;
+  overflow: hidden;
+}
+
+.mainmap{
+  height: 350px;
+  width: 350px;
+  background-color: black;
+  opacity: .8;
+  position: absolute;
+  left: 100px;
+  top: 100px;
+  box-shadow: rgb(3, 3, 32) 0px 7px 29px 0px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: url('Screenshot\ \(150\).png');
+}
+
+.speedometer {
+  text-align: center;
+  color: #ecf0f1;
+  position: absolute;
+  top: 0px; /* Distance from the top */
+  right: 20px; /* Distance from the right */
+   /* Optional: add background to make it stand out */
+  padding: 10px; /* Optional: add padding for better spacing */
+   /* Optional: add shadow for visual effect */
+}
+
+.speed-display {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.unit {
+  font-size: 16px;
+  margin-top: -10px;
+}
+
+
+.cspeedometer {
+  position: relative;
+  width: 400px;
+  height: 200px;
+  top: 150px;
+  left: 30px;
+
+}
+
+.info {
+  color: #ffffff;
+  text-align: center;
+  margin-top: 20px;
+}
+
+#speedometer-fill {
+  transition: stroke-dashoffset 0.5s ease-in-out;
+}
+
+#speedometer-needle {
+  transform-origin: center bottom;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* #speedometer-label {
+  dominant-baseline: middle;
+  alignment-baseline: central;
+  fill: #ffffff;
+  font-weight: bold;
+} */
+
+.battery-container {
+  background: transparent;
+  border-radius: 5px;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  width: 30px;
+}
+.battery {
+  width: 20px;
+  height: 40px;
+  border: 2px solid #333;
+  border-radius: 3px;
+  position: relative;
+  color: white;
+  margin: 5px auto;
+}
+.battery-level {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, #f50808, #00ff62);
+  border-radius: 2px 2px 0 0;
+  position: absolute;
+  bottom: 0;
+  
+}
+.battery-cap {
+  width: 8px;
+  height: 3px;
+  background: #333;
+  margin: 0 auto;
+  border-radius: 0 0 1px 1px;
+  position: relative;
+  top: -3px;
+}
+.status {
+  font-size: 0.5em;
+  margin-top: 3px;
+}
+.cam-1,.cam-2,.cam-3,.cam-4,.cam-5,.cam-6,.cam-7,.cam-8{
+  width: 300px;
+  height: 250px;
+  background-color: #ccc;
+  
+  
+  border-radius: 15px;
+}
+.datetime {
+  font-size: 15px;
+  position: absolute;
+  top: 25px;
+  left: 60px;
+  /* margin-top: 10px; */
+  color: white;
+}
+
+.battery-icon{
+  position: absolute;
+  top: 22px;
+  left: 245px;
+}
+.wifi-icon{
+  position: absolute;
+  top: 20px;
+}
+.top-icons div{
+  margin-left: 50px;
+  
+}
+
+/* .cam-1{
+  top: 50px;
+  left: 50px;
+}
+.cam-2{
+  top: 50px;
+  left: 425px;
+}
+.cam-3{
+  top: 50px;
+  left: 825px;
+}
+.cam-4{
+  top: 50px;
+  left: 1225px;
+}
+.cam-5{
+  top: 400px;
+  left: 50px;
+}
+.cam-6{
+  top: 400px;
+  left: 425px;
+}
+.cam-7{
+  top: 400px;
+  left: 825px;
+}
+.cam-8{
+  top: 400px;
+  left: 1225px;
+}
+ */
+
+.rec1,.rec2,.rec3,.rec4,.rec5,.rec6,.rec7,.rec8{
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+
+
+#google_translate_element{
+  height: 40px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid black;
+background: blue;
+}
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  transform: scale(1);
+  background: #000;
+}
+.fullscreen ~ .grid {
+  display: none;
+}
+.close-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1001;
+  display: none;
+}
+
+.dashboardC {
+  background-color: #333;
+color:  #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 300px;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.info-box {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: black;
+  border-radius: 8px;
+}
+
+.info-box p {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+#solarOutput, #batteryLevel, #energyConsumption, #estimatedRange {
+  font-weight: bold;
+}
+
+.dashboard {
+  background-color: #1e1e1e;
+  border-radius: 15px;
+  padding: 10px;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  width: 300px;
+  position: absolute;
+  right: 625px;
+  bottom: 100px;
+}
+
+.odometer {
+  margin-bottom: 20px;
+  
+}
+
+.label {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.odometer-display {
+  font-size: 36px;
+  color: #fff;
+  background-color: #000;
+  padding: 10px;
+  border-radius: 10px;
+  letter-spacing: 2px;
+}
+
+.controls {
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.unit-toggle {
+  margin-top: 10px;
+}
+
+.unit-toggle input[type="radio"] {
+  display: none;
+}
+
+.unit-toggle label {
+  font-size: 14px;
+  color: #fff;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.t-container {
+  text-align: center;
+  background-color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 250px;
+  margin: 25px;
+  position: absolute;
+  top: 25px;
+  left: 400px;
+}
+
+.t-container h1 {
+  color: #f5f5f5;
+}
+
+#modeStatus {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #f5f5f5; /* Light color for status text */
+}
+
+/* From Uiverse.io by misaraadel */
+.switch {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.switch input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  cursor: pointer;
+}
+
+.switch input:checked ~ .check {
+  background-color: #549b60; /* Green when checked */
+}
+
+.switch input:checked ~ .check::after {
+  transform: translateX(0px);
+}
+
+.switch input:checked ~ .check::before {
+  transform: translateX(50px) !important;
+}
+
+.switch .check {
+  width: 51px;
+  height: 30px;
+  display: block;
+  background-color: #E92E2E; /* Red when not checked */
+  cursor: pointer;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.5s ease-in;
+}
+
+.switch .check::after,
+.switch .check::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  transition: all 0.5s ease-in;
+  border-radius: 50%;
+  background-color: #1e1e1e;
+}
+
+.switch .check::before {
+  background-color: #333; /* Yellow ball when not checked */
+  right: 0px;
+}
+
+.switch .check::after {
+  transform: translateX(-60px);
+  background-color: #333; /* Yellow ball when not checked */
+  left: 0;
+}
+
+.carMiniContainer{
+  position: relative;
+  
+}
+
+
+
